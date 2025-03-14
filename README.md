@@ -29,6 +29,17 @@ Khi tạo công việc mới, người dùng chọn danh mục (category) cho c�
 Hiển thị theo danh mục:
 Công việc được gắn danh mục cụ thể giúp dễ theo dõi theo loại công việc (ví dụ: Học tập, Công việc, Giải trí,...).
 
+2.4. Quản lý công việc với trạng thái, thời gian tạo và hoàn thành:
+a. Quản lý tình trạng công việc (status):
+Mỗi công việc có các trạng thái:
+Pending (Chưa bắt đầu)
+In Progress (Đang thực hiện)
+Completed (Hoàn thành)
+Người dùng có thể thay đổi trạng thái công việc bằng menu thả (select).
+b. Thời gian tạo và hoàn thành:
+Mỗi công việc khi được tạo sẽ lưu lại thời gian tạo (created_at).
+Khi chuyển trạng thái sang Completed, hệ thống tự động ghi lại thời gian hoàn thành (finished_at).
+
 ### 3. Hướng dẫn cài đặt và chạy dự án
 
 #### 📌 Yêu cầu hệ thống
