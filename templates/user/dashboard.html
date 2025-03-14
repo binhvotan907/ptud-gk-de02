@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="user-dashboard">
+    <!-- User Profile Section -->
+    <div class="profile-section">
+        <div class="profile-card">
+            {% if user.avatar %}
+                <img src="{{ url_for('static', filename='uploads/avatars/' + user.avatar) }}" 
+                     class="avatar" alt="Avatar">
+            {% endif %}
+            <h2>Welcome, {{ user.username }}!</h2>
+            <div class="task-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Total Tasks</span>
+                    <span class="stat-value">{{ task_stats.total }}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Pending</span>
+                    <span class="stat-value">{{ task_stats.pending }}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">In Progress</span>
+                    <span class="stat-value">{{ task_stats.in_progress }}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Completed</span>
+                    <span class="stat-value">{{ task_stats.completed }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Task Form -->
+    <div class="add-task-section">
+        <h3>Add New Task</h3>
+        <form method="POST" action="{{ url_for('add_task') }}" class="task-form">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <select id="category" name="category_id" required>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Task</button>
+        </form>
+    </div>
+
+    <!-- Tasks List -->
+    <div class="tasks-section">
+        <h3>My Tasks</h3>
+        <div class="task-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="pending">Pending</button>
+            <button class="filter-btn" data-filter="in_progress">In Progress</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+        <div class="task-cards">
+            {% for task in tasks %}
+            <div class="task-card" data-status="{{ task.status }}">
+                <div class="task-header">
+                    <span class="category-badge">{{ task.category_name }}</span>
+                    <span class="status-badge {{ task.status }}">{{ task.status }}</span>
+                </div>
+                <h4>{{ task.title }}</h4>
+                <p>{{ task.description }}</p>
+                <div class="task-dates">
+                    <small>Created: {{ task.created_at }}</small>
+                    {% if task.finished_at %}
+                        <small>Finished: {{ task.finished_at }}</small>
+                    {% endif %}
+                </div>
+                <form method="POST" action="{{ url_for('update_task', task_id=task.id) }}" 
+                      class="status-form">
+                    <select name="status" onchange="this.form.submit()">
+                        <option value="pending" {% if task.status == 'pending' %}selected{% endif %}>
+                            Pending
+                        </option>
+                        <option value="in_progress" {% if task.status == 'in_progress' %}selected{% endif %}>
+                            In Progress
+                        </option>
+                        <option value="completed" {% if task.status == 'completed' %}selected{% endif %}>
+                            Completed
+                        </option>
+                    </select>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+// Filter tasks
+document.querySelectorAll('.filter-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        // Remove active class from all buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // Add active class to clicked button
+        button.classList.add('active');
+        
+        const filter = button.dataset.filter;
+        document.querySelectorAll('.task-card').forEach(card => {
+            if (filter === 'all' || card.dataset.status === filter) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+});
+</script>
+{% endblock %} 

@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- CSS nội tuyến -->
+<style>
+/* Container dạng thẻ (card) */
+.auth-card {
+    max-width: 420px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Tiêu đề */
+.auth-card h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Form và các trường nhập */
+.auth-form .form-group {
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+.auth-form label {
+    display: block;
+    margin-bottom: 6px;
+    color: #555;
+    font-weight: 600;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.auth-form input:focus {
+    border-color: #28a745;
+    outline: none;
+}
+
+/* Gợi ý nhỏ */
+.form-text {
+    font-size: 12px;
+    color: #888;
+    margin-top: 4px;
+    display: block;
+}
+
+/* Nút Register */
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #1e7e34;
+}
+
+/* Link login */
+.auth-links {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #666;
+}
+
+.auth-links a {
+    color: #28a745;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+</style>
+
+<!-- Nội dung form register -->
+<div class="auth-card">
+    <h2>Register</h2>
+    <form method="POST" class="auth-form">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required placeholder="Choose a username">
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required placeholder="Create a password">
+            <small class="form-text">Password must be at least 6 characters long</small>
+        </div>
+        
+        <div class="form-group">
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" id="confirm_password" name="confirm_password" required placeholder="Repeat your password">
+        </div>
+        
+        <button type="submit" class="btn-primary">Register</button>
+        
+        <div class="auth-links">
+            Already have an account? <a href="{{ url_for('login') }}">Login here</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

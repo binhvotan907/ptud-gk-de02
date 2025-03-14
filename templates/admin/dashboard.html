@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="admin-container">
+    <h1>Admin Dashboard</h1>
+    
+    <!-- Thống kê tổng quan -->
+    <div class="stats-cards">
+        <div class="stat-card">
+            <h3>Total Users</h3>
+            <p class="stat-number">{{ stats.total_users }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Total Tasks</h3>
+            <p class="stat-number">{{ stats.total_tasks }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Active Tasks</h3>
+            <p class="stat-number">{{ stats.active_tasks }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Completed Tasks</h3>
+            <p class="stat-number">{{ stats.completed_tasks }}</p>
+        </div>
+    </div>
+    
+    <!-- Danh sách user -->
+    <div class="users-section">
+        <h2>User Management</h2>
+        <table class="users-table">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Status</th>
+                    <th>Tasks</th>
+                    <th>Completion Rate</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>
+                        {% if user.avatar %}
+                            <img src="{{ url_for('static', filename='uploads/avatars/' + user.avatar) }}" 
+                                 class="user-avatar-small" alt="Avatar">
+                        {% endif %}
+                        {{ user.username }}
+                    </td>
+                    <td>
+                        <span class="status-badge {% if user.is_active %}active{% else %}inactive{% endif %}">
+                            {% if user.is_active %}Active{% else %}Inactive{% endif %}
+                        </span>
+                    </td>
+                    <td>{{ user.task_count }}</td>
+                    <td>
+                        {% if user.task_count > 0 %}
+                            {{ (user.completed_tasks / user.task_count * 100) | round(1) }}%
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('admin_user_detail', user_id=user.id) }}" 
+                           class="btn btn-primary">View Details</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %} 
