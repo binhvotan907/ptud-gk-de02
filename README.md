@@ -40,25 +40,31 @@ b. Thời gian tạo và hoàn thành:
 Mỗi công việc khi được tạo sẽ lưu lại thời gian tạo (created_at).
 Khi chuyển trạng thái sang Completed, hệ thống tự động ghi lại thời gian hoàn thành (finished_at).
 
-### 3. Hướng dẫn cài đặt và chạy dự án
+### 🛠 Công nghệ sử dụng
+- **Backend**: Flask, Flask-Login, SQLAlchemy
+- **Frontend**: HTML, CSS, Bootstrap
+- **Database**: SQLite 
 
-#### 📌 Yêu cầu hệ thống
-- Python >= 3.8
-- Pip (trình quản lý package của Python)
+---
 
-#### 🛠 Cài đặt và chạy ứng dụng
+## 3. Hướng dẫn Cài đặt
+### 🔹 Bước 1: Clone Repository
+```sh
+git clone git clone https://github.com/binhvotan907/ptud-gk-de02
+cd ptud-gk-de-02
 
-a. **Clone repository về máy**
-   ```bash
-   git clone https://github.com/binhvotan907/ptud-gk-de02
-   cd ptud-gk-de02
-   ```
-b. **Chạy ứng dụng Flask**
-   ```bash
-   python app.py
-   ```
-c. **Truy cập ứng dụng trên trình duyệt**
-   ```
-   http://127.0.0.1:5000
-   ```
+```
 
+### 🔹 Bước 2: Thiết lập Database
+```sh
+flask db init
+flask db migrate -m "Initial migration"
+flask db upgrade
+```
+
+### 🔹 Bước 3: Chạy Ứng Dụng
+```sh
+flask run
+```
+
+Ứng dụng sẽ chạy tại: `http://127.0.0.1:5000/`
