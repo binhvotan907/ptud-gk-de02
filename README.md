@@ -21,10 +21,11 @@ Mô tả ngắn.
 Trạng thái (status) dưới dạng nhãn màu (pending, in progress, completed).
 Danh mục công việc (category) dưới dạng badge (nhãn nhỏ).
 Thời gian tạo và thời gian hoàn thành.
-Tên người tạo (nếu là admin).
+Tên người tạo (nếu là admin): 
++ Username: admin
++ Password: admin123
 
 2.3. Quản lý danh mục công việc (Category):
-Cho phép thêm, sửa, xóa danh mục công việc.
 Khi tạo công việc mới, người dùng chọn danh mục (category) cho công việc.
 Hiển thị theo danh mục:
 Công việc được gắn danh mục cụ thể giúp dễ theo dõi theo loại công việc (ví dụ: Học tập, Công việc, Giải trí,...).

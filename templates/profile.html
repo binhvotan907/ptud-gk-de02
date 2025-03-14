@@ -1,9 +1,115 @@
 {% extends "base.html" %}
 
 {% block content %}
+<!-- CSS nội tuyến -->
+<style>
+/* Tổng thể profile */
+.profile-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Tiêu đề */
+.profile-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Phần thông tin và avatar */
+.profile-info {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Avatar */
+.avatar-section {
+    text-align: center;
+}
+
+.avatar {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #007bff;
+    margin-bottom: 20px;
+}
+
+/* Form update avatar */
+.avatar-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
+
+.avatar-form .form-group {
+    width: 100%;
+    text-align: left;
+}
+
+.avatar-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #444;
+}
+
+.avatar-form input[type="file"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Nút update avatar */
+.avatar-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.avatar-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Thông tin user */
+.user-info {
+    flex: 1;
+    min-width: 200px;
+}
+
+.user-info p {
+    font-size: 16px;
+    margin: 12px 0;
+    color: #333;
+}
+
+.user-info strong {
+    color: #555;
+}
+</style>
+
+<!-- Nội dung chính -->
 <div class="profile-container">
     <h2>Profile</h2>
     <div class="profile-info">
+        <!-- Avatar Section -->
         <div class="avatar-section">
             {% if user.avatar %}
                 <img src="{{ url_for('static', filename='uploads/avatars/' + user.avatar) }}" alt="Avatar" class="avatar">
@@ -11,6 +117,7 @@
                 <img src="{{ url_for('static', filename='img/default-avatar.png') }}" alt="Default Avatar" class="avatar">
             {% endif %}
             
+            <!-- Form cập nhật avatar -->
             <form method="POST" enctype="multipart/form-data" class="avatar-form">
                 <div class="form-group">
                     <label for="avatar">Update Avatar:</label>
@@ -20,10 +127,11 @@
             </form>
         </div>
         
+        <!-- User Info Section -->
         <div class="user-info">
             <p><strong>Username:</strong> {{ user.username }}</p>
             <p><strong>Role:</strong> {% if user.is_admin %}Admin{% else %}User{% endif %}</p>
         </div>
     </div>
 </div>
-{% endblock %} 
+{% endblock %}

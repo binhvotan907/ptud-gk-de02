@@ -1,183 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- CSS nội tuyến -->
-<style>
-/* Tổng thể dashboard */
-.dashboard {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    max-width: 1000px;
-    margin: 40px auto;
-}
-
-/* Form thêm task */
-.add-task-section {
-    background: #fff;
-    padding: 20px 30px;
-    border-radius: 16px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-}
-
-.add-task-section h2 {
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.task-form .form-group {
-    margin-bottom: 16px;
-    text-align: left;
-}
-
-.task-form label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 600;
-    color: #444;
-}
-
-.task-form input,
-.task-form textarea,
-.task-form select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-sizing: border-box;
-    font-size: 15px;
-    transition: border-color 0.3s;
-}
-
-.task-form textarea {
-    height: 100px;
-    resize: vertical;
-}
-
-.task-form input:focus,
-.task-form textarea:focus,
-.task-form select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-/* Nút Add Task */
-.task-form button {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    background-color: #007bff;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.task-form button:hover {
-    background-color: #0056b3;
-}
-
-/* Danh sách task */
-.tasks-section h2 {
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.task-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-}
-
-/* Thẻ task */
-.task-card {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.task-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* Category và Status badge */
-.category-badge {
-    padding: 4px 10px;
-    border-radius: 12px;
-    background-color: #17a2b8;
-    color: white;
-    font-size: 12px;
-}
-
-.status-badge {
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 12px;
-    color: white;
-    text-transform: capitalize;
-}
-
-.status-badge.pending { background: #ffc107; }
-.status-badge.in_progress { background: #17a2b8; }
-.status-badge.completed { background: #28a745; }
-
-/* Tiêu đề task */
-.task-card h3 {
-    margin: 0;
-    color: #222;
-    font-weight: bold;
-    font-size: 18px;
-}
-
-/* Mô tả task */
-.task-card p {
-    margin: 0;
-    color: #555;
-    font-size: 14px;
-}
-
-/* Thông tin người tạo */
-.task-user {
-    color: #777;
-    font-size: 13px;
-    font-style: italic;
-}
-
-/* Ngày tháng */
-.task-dates {
-    margin-top: auto;
-    font-size: 12px;
-    color: #999;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-/* Form chọn trạng thái */
-.status-form {
-    margin-top: 10px;
-}
-
-.status-form select {
-    width: 100%;
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-}
-</style>
-
-<!-- Nội dung -->
+<!-- Nội dung chính -->
 <div class="dashboard">
 
-    <!-- Thêm task -->
+    <!-- Khu vực thêm task mới -->
     <div class="add-task-section">
         <h2>Add New Task</h2>
         <form method="POST" action="{{ url_for('add_task') }}" class="task-form">
@@ -201,7 +28,7 @@
         </form>
     </div>
 
-    <!-- Danh sách task -->
+    <!-- Khu vực danh sách task -->
     <div class="tasks-section">
         <h2>Tasks</h2>
         <div class="task-cards">
@@ -209,10 +36,10 @@
                 <div class="task-card">
                     <div class="task-header">
                         <span class="category-badge">{{ task.category_name }}</span>
-                        <span class="status-badge {{ task.status }}">{{ task.status }}</span>
+                        <span class="status-badge {{ task.status }}">{{ task.status.replace('_', ' ') }}</span>
                     </div>
                     <h3>{{ task.title }}</h3>
-                    <p>{{ task.description }}</p>
+                    <p>{{ task.description or 'No description provided.' }}</p>
                     {% if session.get('is_admin') %}
                         <p class="task-user">By: {{ task.username }}</p>
                     {% endif %}
